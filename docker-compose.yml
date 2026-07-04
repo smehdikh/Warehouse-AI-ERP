@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - warehouse_data:/app/data
+    environment:
+      - DUCKDB_DATABASE=data/warehouse.db
+      - ENVIRONMENT=development
+      - DEBUG=true
+    restart: unless-stopped
+
+volumes:
+  warehouse_data:
